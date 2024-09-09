@@ -34,7 +34,7 @@ import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 /**
  * @author Clinton Begin
  */
-public class DefaultSqlSessionFactory implements SqlSessionFactory {
+public class DefaultSqlSessionFactory implements SqlSessionFactory { // jxh: 默认SqlSessionFactory
 
   private final Configuration configuration;
 
@@ -43,7 +43,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
   }
 
   @Override
-  public SqlSession openSession() {
+  public SqlSession openSession() { // jxh: 开启会话
     return openSessionFromDataSource(configuration.getDefaultExecutorType(), null, false);
   }
 

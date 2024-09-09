@@ -31,7 +31,7 @@ import org.apache.ibatis.session.SqlSession;
  * @author Eduardo Macarron
  * @author Lasse Voss
  */
-public class MapperRegistry {
+public class MapperRegistry { // jxh: mapper代理缓存
 
   private final Configuration config;
   private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new ConcurrentHashMap<>();

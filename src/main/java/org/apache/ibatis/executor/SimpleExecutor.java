@@ -59,10 +59,12 @@ public class SimpleExecutor extends BaseExecutor {
     Statement stmt = null;
     try {
       Configuration configuration = ms.getConfiguration();
+      // jxh: 创建StatementHandler，使用拦截器层层代理
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler,
           boundSql);
+      // jxh: 创建&预处理Statement
       stmt = prepareStatement(handler, ms.getStatementLog());
-      return handler.query(stmt, resultHandler);
+      return handler.query(stmt, resultHandler); // jxh: 执行查询
     } finally {
       closeStatement(stmt);
     }
@@ -88,7 +90,7 @@ public class SimpleExecutor extends BaseExecutor {
     Statement stmt;
     Connection connection = getConnection(statementLog);
     stmt = handler.prepare(connection, transaction.getTimeout());
-    handler.parameterize(stmt);
+    handler.parameterize(stmt); // jxh: 设置参数
     return stmt;
   }
 

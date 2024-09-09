@@ -149,7 +149,7 @@ public class DefaultSqlSession implements SqlSession {
 
   private <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds, ResultHandler handler) {
     try {
-      MappedStatement ms = configuration.getMappedStatement(statement);
+      MappedStatement ms = configuration.getMappedStatement(statement); // jxh: 根据id查找MappedStatement
       dirty |= ms.isDirtySelect();
       return executor.query(ms, wrapCollection(parameter), rowBounds, handler);
     } catch (Exception e) {

@@ -78,12 +78,12 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
   }
 
   @Override
-  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable { // jxh: 代理执行流程
     try {
       if (Object.class.equals(method.getDeclaringClass())) {
         return method.invoke(this, args);
       }
-      return cachedInvoker(method).invoke(proxy, method, args, sqlSession);
+      return cachedInvoker(method).invoke(proxy, method, args, sqlSession); // jxh: 执行sql
     } catch (Throwable t) {
       throw ExceptionUtil.unwrapThrowable(t);
     }
@@ -138,7 +138,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args, SqlSession sqlSession) throws Throwable {
-      return mapperMethod.execute(sqlSession, args);
+      return mapperMethod.execute(sqlSession, args); // jxh: 执行sql
     }
   }
 

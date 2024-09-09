@@ -44,7 +44,7 @@ import org.apache.ibatis.session.SqlSession;
  * @author Lasse Voss
  * @author Kazuki Shimizu
  */
-public class MapperMethod {
+public class MapperMethod { // jxh: sql映射方法
 
   private final SqlCommand command;
   private final MethodSignature method;
@@ -54,7 +54,7 @@ public class MapperMethod {
     this.method = new MethodSignature(config, mapperInterface, method);
   }
 
-  public Object execute(SqlSession sqlSession, Object[] args) {
+  public Object execute(SqlSession sqlSession, Object[] args) { // jxh: 执行sql
     Object result;
     switch (command.getType()) {
       case INSERT: {

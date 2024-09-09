@@ -149,13 +149,13 @@ public class Configuration {
    */
   protected Class<?> configurationFactory;
 
-  protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
-  protected final InterceptorChain interceptorChain = new InterceptorChain();
+  protected final MapperRegistry mapperRegistry = new MapperRegistry(this); // jxh: 代理对象缓存
+  protected final InterceptorChain interceptorChain = new InterceptorChain(); // jxh: 拦截器
   protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry(this);
   protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
   protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
 
-  protected final Map<String, MappedStatement> mappedStatements = new StrictMap<MappedStatement>(
+  protected final Map<String, MappedStatement> mappedStatements = new StrictMap<MappedStatement>( // jxh: SQL缓存
       "Mapped Statements collection")
           .conflictMessageProducer((savedValue, targetValue) -> ". please check " + savedValue.getResource() + " and "
               + targetValue.getResource());
@@ -707,21 +707,21 @@ public class Configuration {
     return MetaObject.forObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
   }
 
-  public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject,
+  public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, // jxh: 代理ParameterHandler
       BoundSql boundSql) {
     ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement,
         parameterObject, boundSql);
     return (ParameterHandler) interceptorChain.pluginAll(parameterHandler);
   }
 
-  public ResultSetHandler newResultSetHandler(Executor executor, MappedStatement mappedStatement, RowBounds rowBounds,
+  public ResultSetHandler newResultSetHandler(Executor executor, MappedStatement mappedStatement, RowBounds rowBounds, // jxh: 代理ResultSetHandler
       ParameterHandler parameterHandler, ResultHandler resultHandler, BoundSql boundSql) {
     ResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, mappedStatement, parameterHandler,
         resultHandler, boundSql, rowBounds);
     return (ResultSetHandler) interceptorChain.pluginAll(resultSetHandler);
   }
 
-  public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement,
+  public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, // jxh: 代理StatementHandler
       Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
     StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject,
         rowBounds, resultHandler, boundSql);
@@ -732,7 +732,7 @@ public class Configuration {
     return newExecutor(transaction, defaultExecutorType);
   }
 
-  public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
+  public Executor newExecutor(Transaction transaction, ExecutorType executorType) { // jxh: 代理Executor
     executorType = executorType == null ? defaultExecutorType : executorType;
     Executor executor;
     if (ExecutorType.BATCH == executorType) {

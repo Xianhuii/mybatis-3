@@ -26,7 +26,7 @@ import org.apache.ibatis.session.SqlSession;
 /**
  * @author Lasse Voss
  */
-public class MapperProxyFactory<T> {
+public class MapperProxyFactory<T> { // jxh: 代理工厂
 
   private final Class<T> mapperInterface;
   private final Map<Method, MapperMethodInvoker> methodCache = new ConcurrentHashMap<>();
@@ -48,7 +48,7 @@ public class MapperProxyFactory<T> {
     return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[] { mapperInterface }, mapperProxy);
   }
 
-  public T newInstance(SqlSession sqlSession) {
+  public T newInstance(SqlSession sqlSession) { // jxh: 创建代理对象
     final MapperProxy<T> mapperProxy = new MapperProxy<>(sqlSession, mapperInterface, methodCache);
     return newInstance(mapperProxy);
   }

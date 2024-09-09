@@ -22,7 +22,7 @@ import java.sql.Connection;
  *
  * @author Clinton Begin
  */
-public interface SqlSessionFactory {
+public interface SqlSessionFactory { // jxh: SqlSession工厂
 
   SqlSession openSession();
 

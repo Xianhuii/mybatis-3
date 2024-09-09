@@ -151,11 +151,11 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
-      list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
+      list = resultHandler == null ? (List<E>) localCache.getObject(key) : null; // jxh: 查找本地缓存
       if (list != null) {
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
       } else {
-        list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
+        list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql); // jxh: 查找数据库
       }
     } finally {
       queryStack--;
@@ -333,7 +333,7 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     localCache.putObject(key, EXECUTION_PLACEHOLDER);
     try {
-      list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
+      list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql); // jxh: 查找数据库
     } finally {
       localCache.removeObject(key);
     }

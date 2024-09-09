@@ -30,7 +30,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
  *
  * @author Clinton Begin
  */
-public class SqlSessionFactoryBuilder {
+public class SqlSessionFactoryBuilder { // jxh: SqlSessionFactory建造器
 
   public SqlSessionFactory build(Reader reader) {
     return build(reader, null, null);
